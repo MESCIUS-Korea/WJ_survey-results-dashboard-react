@@ -1,0 +1,247 @@
+@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+
+body {
+  font-family: 'nanumsquare' !important;
+  margin-top: 40px !important;
+}
+
+.header-title h3 {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.wj-flexgrid {
+  max-height: 650px;
+  margin: 10px 0;
+}
+
+.column-picker-icon {
+  cursor: pointer;
+  color: #66b1cc;
+  margin: 3px;
+}
+
+.column-picker-div {
+  display: none;
+}
+
+.wj-listbox.column-picker {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 0 10px;
+  columns: 4;
+  /* IE fallback */
+  padding: 12px;
+  margin-left: 12px;
+  margin-top: 26px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.wj-listbox .wj-listbox-item > label {
+  display: block;
+  margin: 0 0 3px 0;
+}
+
+.wj-listbox .wj-listbox-item.wj-state-selected {
+  background: transparent;
+  color: inherit;
+}
+
+.wj-listbox .wj-listbox-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* 그리드 영역 */
+
+.wj-header {
+  background-color: #ffffff !important;
+}
+
+.wj-cell {
+  border-bottom: 0.5px solid #e6e6e6 !important;
+  border-right: none !important;
+  text-align: center !important;
+  padding: 10px 0px;
+}
+
+.wj-frozen.wj-state-selected,
+.wj-frozen.wj-state-multi-selected {
+  color: #000000 !important;
+}
+/* 고정된 열 */
+.wj-frozen:not(.wj-header) {
+  background-color: #f8f7f4 !important;
+}
+.wj-frozen-col {
+  border-right: 0.5px solid #ececec !important;
+}
+/*  인사평가 셀 */
+.performance-cell {
+  padding: 2.5px 0px;
+  margin: auto;
+  border-radius: 30px;
+  width: 45%;
+  background-color: #98d8aa;
+  color: white;
+  font-weight: bold;
+}
+
+.yellow-performance-cell {
+  background-color: #f7d060;
+}
+
+.red-performance-cell {
+  background-color: #ff6d60;
+}
+
+/* 그리드 필터 아이콘 */
+.wj-glyph-filter {
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgaWQ9IlNWR1JlcG9fYmdDYXJyaWVyIiBzdHJva2Utd2lkdGg9IjAiPjwvZz48ZyBpZD0iU1ZHUmVwb190cmFjZXJDYXJyaWVyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjwvZz48ZyBpZD0iU1ZHUmVwb19pY29uQ2FycmllciI+IDxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMyA3QzMgNi40NDc3MiAzLjQ0NzcyIDYgNCA2SDIwQzIwLjU1MjMgNiAyMSA2LjQ0NzcyIDIxIDdDMjEgNy41NTIyOCAyMC41NTIzIDggMjAgOEg0QzMuNDQ3NzIgOCAzIDcuNTUyMjggMyA3Wk02IDEyQzYgMTEuNDQ3NyA2LjQ0NzcyIDExIDcgMTFIMTdDMTcuNTUyMyAxMSAxOCAxMS40NDc3IDE4IDEyQzE4IDEyLjU1MjMgMTcuNTUyMyAxMyAxNyAxM0g3QzYuNDQ3NzIgMTMgNiAxMi41NTIzIDYgMTJaTTkgMTdDOSAxNi40NDc3IDkuNDQ3NzIgMTYgMTAgMTZIMTRDMTQuNTUyMyAxNiAxNSAxNi40NDc3IDE1IDE3QzE1IDE3LjU1MjMgMTQuNTUyMyAxOCAxNCAxOEgxMEM5LjQ0NzcyIDE4IDkgMTcuNTUyMyA5IDE3WiIgZmlsbD0iIzAwMDAwMCI+PC9wYXRoPiA8L2c+PC9zdmc+');
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  margin-top: 2px;
+  width: 20px;
+  height: 20px;
+  border: none;
+}
+
+.wj-glyph-filter:after {
+  display: none;
+}
+
+/* 그리드 검색 input */
+.wj-flexgridsearch {
+  border-width: 0 0 1px;
+  background-color: #f1f0f0;
+  margin-left: 15px;
+}
+.wj-flexgridsearch .wj-input-group-btn {
+  display: none !important;
+}
+
+.wj-flexgridsearch img {
+  margin-left: 5px;
+}
+
+/* 그리드 상단 패널 영역 */
+.flexgrid-header-panel,
+.header-panel-left,
+.header-panel-right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* 헤더 패널 콤보박스 */
+.status-comboBox.wj-control.wj-content.wj-combobox,
+.export-comboBox,
+.export-comboBox.wj-control
+  .wj-input-group
+  .wj-input-group-btn:last-child:not(:first-child)
+  .wj-btn,
+.status-comboBox.wj-control
+  .wj-input-group
+  .wj-input-group-btn:last-child:not(:first-child)
+  .wj-btn {
+  border-width: 0 0 1px;
+}
+.export-comboBox,
+.status-comboBox {
+  width: 170px;
+  margin: 0 6px;
+  font-weight: bold;
+  border-radius: 0;
+}
+
+.status-comboBox {
+  width: 140px;
+}
+
+button {
+  position: relative;
+  /* width: 30px; */
+  text-align: center;
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 12rem;
+  font-weight: 700;
+  z-index: 10;
+  transition: all 500ms;
+  border: 2px solid transparent;
+  margin: 0px 10px;
+  border-radius: 5px;
+}
+
+.addNewRecordBtn {
+  color: white;
+  background-color: #ee6c4d;
+}
+
+/* 팝업 */
+
+.new-record-popup {
+  width: 70%;
+  height: 60%;
+  padding: 20px;
+  overflow-y: scroll;
+}
+
+.modal-header {
+  /* border-bottom: 0 !important; */
+  /* margin-bottom: 40px; */
+  color: #25466c;
+  font-weight: bold;
+}
+
+.modal-footer {
+  border-top: 0 !important;
+}
+
+.popup-inputs:not(.wj-inputdate-dropdown .wj-calendar-outer),
+.form-control {
+  width: 100%;
+  border-width: 0px !important;
+  /* border-radius: 0 !important; */
+  background-color: #edf6fd !important;
+  height: 34px;
+}
+
+.popup-inputs.wj-control
+  .wj-input-group
+  .wj-input-group-btn:last-child:not(:first-child)
+  .wj-btn {
+  border-width: 0;
+}
+.col-md-6 label,
+.col-md-4 label,
+.col-md-5 label,
+.col-md-7 label {
+  color: #b3b3b3;
+  margin: 0 0 15px 0;
+}
+
+div.col-md-6,
+div.col-md-4,
+div.col-md-5,
+div.col-md-7 {
+  margin-bottom: 17px;
+}
+
+.mandatory-value-mark {
+  color: red;
+}
+
+#submitBtn {
+  background: #35477d;
+  border-color: #35477d;
+}
+
+#cancelBtn {
+  background: white;
+  border-color: black;
+  color: black;
+}
+#submitBtn,
+#cancelBtn {
+  font-size: 15px;
+  padding: 5px 15px;
+}

@@ -1,0 +1,33 @@
+{
+  "name": "react",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@mescius/wijmo": "5.20241.19",
+    "@mescius/wijmo.cultures": "5.20241.19",
+    "@mescius/wijmo.grid": "5.20241.19",
+    "@mescius/wijmo.grid.pdf": "5.20241.19",
+    "@mescius/wijmo.grid.selector": "5.20241.19",
+    "@mescius/wijmo.grid.xlsx": "5.20241.19",
+    "@mescius/wijmo.input": "5.20241.19",
+    "@mescius/wijmo.react.grid": "5.20241.19",
+    "@mescius/wijmo.react.grid.filter": "5.20241.19",
+    "@mescius/wijmo.react.grid.search": "5.20241.19",
+    "@mescius/wijmo.react.input": "5.20241.19",
+    "@mescius/wijmo.styles": "5.20241.19",
+    "bootstrap-css": "3.3.7",
+    "jszip": "3.10.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-use-event-hook": "0.9.6"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "react-scripts": "latest"
+  }
+}
