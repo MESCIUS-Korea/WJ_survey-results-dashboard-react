@@ -1,140 +1,68 @@
 import '@mescius/wijmo.styles/wijmo.css';
-
-import './style.css';
-import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom/client';
-import useEvent from 'react-use-event-hook';
-import { Selector } from '@mescius/wijmo.grid.selector';
-import { FlexGrid, FlexGridColumn } from '@mescius/wijmo.react.grid';
-import { FlexGridFilter } from '@mescius/wijmo.react.grid.filter';
-import { FlexGridSearch } from '@mescius/wijmo.react.grid.search';
-import { CollectionView, setLicenseKey } from '@mescius/wijmo';
-
+import React, { useState, useEffect, useRef } from 'react';
+import 'bootstrap-css';
+import { detailData, summaryData, genderData } from './data';
 import '@mescius/wijmo.cultures/wijmo.culture.ko';
-import { data } from './data';
-import ColumnPicker from './ColumnPicker';
-import ExportCombo from './ExportComboBox';
-import StatusComboBox from './StatusComboBox';
-import AddNewPopup from './AddNewPopup';
-import search from './search.svg';
+import './style.css';
+import SummaryGrid from './components/SummaryGrid.js';
+import GenderGrid from './components/GenderGrid.js';
+import DetailGrid from './components/DetailGrid.js';
+import Chart from './components/Chart.js';
 
-export default function App() {
-  setLicenseKey(window.evalkey);
-  const theGridRef = useRef(null);
-
-  const theSearchRef = useRef(null);
-  const selectorRef = useRef(null);
-  const [gridInitialized, setGridInitialized] = useState(false);
-  const [state, setState] = useState({
-    view: new CollectionView(data, {
-      newItemCreator: () => {
-        let newItem = {
-          index: null,
-          int: null,
-          name: null,
-          birthDate: null,
-          department: null,
-          position: null,
-          phone: null,
-          email: null,
-          workplace: null,
-          yearsOfService: null,
-          startDate: null,
-          qualificationStatus: null,
-          performanceRating: null,
-        };
-        return newItem;
-      },
-    }),
-
-    headers: true,
-    selectedItems: [],
-  });
+function App() {
+  const [items, setItems] = useState([]);
+  const [summaryItems, setSummaryItems] = useState([]);
+  const [genderItems, setGenderItems] = useState([]);
+  const setDetailGridDataRef = useRef(null);
   useEffect(() => {
-    theSearchRef.current.control.grid = theGridRef.current.control;
+    const fetchData = async () => {
+      try {
+        const detailDataResult = await detailData();
+        setItems(detailDataResult); // 상태 업데이트
+
+        const summaryDataResult = await summaryData();
+        setSummaryItems(summaryDataResult);
+
+        const genderDataResult = await genderData();
+        setGenderItems(genderDataResult); // 상태 업데이트
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const initializedGrid = useEvent((flex) => {
-    theGridRef.current = flex;
-    setGridInitialized(true);
-    selectorRef.current = new Selector(flex, {});
-    flex.formatItem.addHandler((s, e) => {
-      if (e.panel == s.topLeftCells) {
-        e.cell.innerHTML =
-          '<span class="column-picker-icon glyphicon glyphicon-cog"></span>';
-      } else if (e.panel === s.cells) {
-        if (s.columns[e.col].binding === 'performanceRating') {
-          let val = s.rows[e.row].dataItem.performanceRating;
-
-          let className =
-            val === 'B'
-              ? 'yellow-performance-cell'
-              : val === 'C'
-              ? 'red-performance-cell'
-              : '';
-          e.cell.innerHTML = `<div class="performance-cell ${className}">${e.cell.textContent}</div>`;
-        }
-      }
-    });
-  });
-
-  const initializedSearch = (s) => {
-    let img = document.createElement('img');
-    img.src = search;
-    img.class = 'search-icon';
-
-    s.hostElement.prepend(img);
+  // Chart에서 선택이 바뀔 때 DetailGrid의 데이터 업데이트
+  const handleChartSelectionChanged = (selectedIndex) => {
+    if (setDetailGridDataRef.current) {
+      setDetailGridDataRef.current(selectedIndex); // DetailGrid의 setDetailGridData 호출
+    }
   };
+
   return (
     <div className="container-fluid">
-      <div className="flexgrid-header-panel">
-        <div className="header-panel-left">
-          <div className="header-title">
-            <h3>인사 정보 그리드</h3>
-          </div>
-          <FlexGridSearch
-            ref={theSearchRef}
-            placeholder="검색어를 입력해주세요"
-            initialized={initializedSearch}
+      <div className="row">
+        <div className="col-md-3 left-container">
+          <SummaryGrid data={summaryItems} />
+          <GenderGrid data={genderItems} />
+        </div>
+
+        <div className="col-md-8 right-container">
+          <Chart
+            data={summaryItems}
+            chartSelectionChanged={handleChartSelectionChanged}
+          />
+
+          <DetailGrid
+            data={items}
+            onSetDetailGridData={(setDetailGridData) => {
+              setDetailGridDataRef.current = setDetailGridData; // setDetailGridData 함수 참조 저장
+            }}
           />
         </div>
-        <div className="header-panel-right">
-          {gridInitialized && <StatusComboBox grid={theGridRef.current} />}
-          {gridInitialized && <ExportCombo grid={theGridRef.current} />}
-          {gridInitialized && <AddNewPopup grid={theGridRef.current} />}
-        </div>
       </div>
-      <FlexGrid
-        ref={theGridRef}
-        itemsSource={state.view}
-        alternatingRowStep={0}
-        frozenColumns={3}
-        isReadOnly={true}
-        initialized={initializedGrid}
-      >
-        <FlexGridColumn binding="index" header="No." width={60} />
-        <FlexGridColumn binding="int" header="사원번호" />
-        <FlexGridColumn binding="name" header="사원명" width={120} />
-        <FlexGridColumn binding="birthDate" header="생년월일" dataType="Date" />
-        <FlexGridColumn binding="department" header="부서명" />
-        <FlexGridColumn binding="position" header="직위명" />
-        <FlexGridColumn binding="phone" header="전화번호" />
-        <FlexGridColumn binding="email" header="이메일" />
-        <FlexGridColumn binding="workplace" header="근무지명" />
-        <FlexGridColumn
-          binding="yearsOfService"
-          header="근속년도"
-          dataType="Number"
-        />
-        <FlexGridColumn binding="startDate" header="입사일자" dataType="Date" />
-        <FlexGridColumn
-          binding="qualificationStatus"
-          header="승급자격충족여부"
-        />
-        <FlexGridColumn binding="performanceRating" header="인사평가" />
-        <FlexGridFilter />
-      </FlexGrid>
-      {gridInitialized && <ColumnPicker grid={theGridRef.current} />}
     </div>
   );
 }
